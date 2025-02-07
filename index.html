@@ -19,27 +19,26 @@
       overflow: hidden;
       position: relative;
     }
-    h1 {
-      color: #ff4d4d;
-      font-size: 3rem;
-      margin-bottom: 20px;
+    
+    h1, p {
+      position: relative;  /* Ensures text stays in front */
+      z-index: 10;
     }
+
     .rose {
       font-size: 5rem;
       cursor: pointer;
       user-select: none;
-      position: absolute;
+      position: fixed;
+      z-index: -1; /* Keeps roses in the background */
     }
-    p {
-      font-size: 1.5rem;
-      color: #333;
-      margin-top: 20px;
-    }
+
     .heart {
       color: #ff4d4d;
       font-size: 2rem;
       animation: beat 1s infinite;
     }
+
     @keyframes beat {
       0%, 100% {
         transform: scale(1);
@@ -48,6 +47,7 @@
         transform: scale(1.2);
       }
     }
+
     @keyframes floatUp {
       0% {
         transform: translateY(0) scale(1);
@@ -69,28 +69,22 @@
 
   <script>
     function replicateRose(event) {
-      const numRoses = 30; // Number of roses per click
+      const numRoses = 30;
 
       for (let i = 0; i < numRoses; i++) {
         const newRose = document.createElement('div');
         newRose.className = 'rose';
         newRose.innerHTML = '🌹';
 
-        // Random position inside the viewport
         newRose.style.left = `${Math.random() * window.innerWidth}px`;
         newRose.style.top = `${Math.random() * window.innerHeight}px`;
 
-        // Random size
         newRose.style.fontSize = `${Math.random() * 3 + 2}rem`;
-
-        // Animation effect (floating up and fading)
-        newRose.style.position = 'absolute';
+        newRose.style.position = 'fixed';
         newRose.style.animation = 'floatUp 5s linear forwards';
 
-        // Append to body
         document.body.appendChild(newRose);
 
-        // Remove after animation
         setTimeout(() => {
           newRose.remove();
         }, 5000);
